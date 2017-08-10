@@ -247,7 +247,6 @@ def taskMap = ["migrateWarehouse": "Migrates the schemas that are required for r
                "cleanWarehouse_test": "Cleans the schemas that integration tests depend on"]
 
 taskMap.keySet().each { key ->
-    println(key.contains("_test")?"${key.take(key.lastIndexOf('_test'))}Test":"${key}Prod")
     task(key.contains("_test")?"${key.take(key.lastIndexOf('_test'))}Test":"${key}Prod", type: GradleBuild, dependsOn: extractSchema) {
         group = "Schema"
         description = taskMap[key]

@@ -36,6 +36,18 @@ spring:
     type: SIMPLE
     cache-names: permissionsByRole
 
+    # Force the (rabbit) queues to be created when posting messages so, even if
+    # there are no consumers running, the messages will not get lost. Routing is
+    # dynamic based on content but there is no way to do that here so we must
+    # explicitly declare all possible output channels here (EXAM, PACKAGE, etc.).
+    # The group names must be coordinated with the consumer application configs.
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: GROUPS
+          group: default
+
 # Needed for access to S3
 cloud:
   aws:

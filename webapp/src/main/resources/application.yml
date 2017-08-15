@@ -12,6 +12,14 @@ saml:
   private-key-entry-password: ${rdw.admin.keystore.entry.password}
   idp-metadata-url: ${rdw.admin.idp}
   sp-entity-id: ${rdw.admin.entityId}
+  # SAML settings when hosting behind a load balancer or reverse proxy
+  load-balance:
+    enabled: false
+    scheme: https
+    hostname:
+    context-path: /
+    port: 8080
+    include-server-port: false
 
 spring:
   datasource:

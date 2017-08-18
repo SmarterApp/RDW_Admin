@@ -1,26 +1,26 @@
 import { Injectable } from "@angular/core";
+import { DataService } from "../shared/data/data.service";
 import { Observable } from "rxjs";
 import { isNullOrUndefined } from "util";
-import { ImportResult } from "./import-result.model";
-import { DataService } from "../../shared/data/data.service";
+import { StudentGroupBatch } from "./student-group-batch.model";
 
 /**
  * This service is responsible for retrieving student group batches
  */
 @Injectable()
-export class GroupImportService {
+export class StudentGroupService {
 
   constructor(private dataService: DataService) {
   }
 
-  findStudentGroupBatches(): Observable<ImportResult[]> {
+  findStudentGroupBatches(): Observable<StudentGroupBatch[]> {
     return this.dataService
       .get(`/studentGroupBatches`)
       .map((apiStudentGroupBatch) => this.mapWarehouseImportsFromApi(apiStudentGroupBatch));
   }
 
-  mapImportResultFromApi(apiModel: any): ImportResult {
-    let uiModel = new ImportResult();
+  mapStudentGroupBatchFromApi(apiModel: any): StudentGroupBatch {
+    let uiModel = new StudentGroupBatch();
     uiModel.id = apiModel.id;
     uiModel.digest = apiModel.digest;
     uiModel.message = apiModel.message;
@@ -30,10 +30,10 @@ export class GroupImportService {
     return uiModel;
   }
 
-  private mapWarehouseImportsFromApi(apiStudentGroupBatch: any[]): ImportResult[] {
+  private mapWarehouseImportsFromApi(apiStudentGroupBatch: any[]): StudentGroupBatch[] {
     if (isNullOrUndefined(apiStudentGroupBatch)) return [];
     return apiStudentGroupBatch
       .filter(apiStudentGroupBatch => !isNullOrUndefined(apiStudentGroupBatch))
-      .map(apiStudentGroupBatch => this.mapImportResultFromApi(apiStudentGroupBatch));
+      .map(apiStudentGroupBatch => this.mapStudentGroupBatchFromApi(apiStudentGroupBatch));
   }
 }

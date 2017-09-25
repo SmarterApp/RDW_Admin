@@ -3,10 +3,22 @@ sql:
     findWarehouseImports: >-
       SELECT i.id, i.digest FROM import i limit 10;
 
+  districtGroup:
+    findAllIds: >-
+      select natural_id, id
+      from district_group
+      where natural_id in (:naturalIds)
+
   district:
     findAllIds: >-
       select natural_id, id
       from district
+      where natural_id in (:naturalIds)
+
+  schoolGroup:
+    findAllIds: >-
+      select natural_id, id
+      from school_group
       where natural_id in (:naturalIds)
 
   group:
